@@ -188,7 +188,7 @@ Additional methods:
 #### Default page
 Default page will be shown to unauthenticated users. It will allow users to login and/or register new account. It will communicate with [User service](#user-service).
 
-* __URL__ - https://home-manager.needleware.com/
+__URL__ - https://home-manager.needleware.com/
 
 ![Default page mockup](./documentation/mockups/img/DefaultPage.png)
 
@@ -214,10 +214,14 @@ The component will provide:
 * table of values - each entity name will open a detail window, each line will have a "Remove" column on the last position to remove the entity
 * Add button - on click it will display a Create hover window
 
+__URL__ - https://home-manager.needleware.com/<entity_name>
+
 ![Common list mockup](./documentation/mockups/img/CommonList.png)
 
 #### Common detail component
 Same as common listing, it will be useful to provide a generic component for displaying details about entities in the system. The component should be shown as a hove window over the listing and should display all properties of selected component. In the addition it should show an "Edit" button that will switch the component to Common edit component and a "dismiss" button as a cross in top-right corner.
+
+__URL__ - https://home-manager.needleware.com/<entity_name>/<entity_id>/detail
 
 ![Common detail mockup](./documentation/mockups/img/CommonDetail.png)
 
@@ -225,6 +229,10 @@ Same as common listing, it will be useful to provide a generic component for dis
 The same as Common detail component but all entity properties (including name but excluding ID) are displayed as editable text inputs. It provides two buttons:
 * __Save__ - will update the system entity to current state of the edit component
 * __Reset__ - will reset all local changes to the values saved in the system
+
+__URL (edit)__ - https://home-manager.needleware.com/<entity_name>/<entity_id>/edit
+
+__URL (create)__ - https://home-manager.needleware.com/<entity_name>/create
 
 ![Common edit mockup](./documentation/mockups/img/CommonEdit.png)
 
@@ -234,6 +242,8 @@ Selecting the "Add new" option from Top menu's Household selection will open a C
 #### Items page
 Clicking the "Items" navigation button from Navigation menu will show Common listing component for items. This page should serve as an example for all other listing/edit/create pages in the system.
 
+__URL__ - https://home-manager.needleware.com/items
+
 ![Item lsiting mockup](./documentation/mockups/img/ItemsPage-Listing.png)
 ![Item detail mockup](./documentation/mockups/img/ItemsPage-Detail.png)
 ![Item edit mockup](./documentation/mockups/img/ItemsPage-Edit_Create.png)
@@ -242,5 +252,7 @@ Clicking the "Items" navigation button from Navigation menu will show Common lis
 Clicking the "Shopping List" navigation button from Navigation menu will show Shopping list page. This page will show the date and when the shopping list was open and list of entered items, their amounts, UoMs and a check box to mark the item as checked.
 Whenever an item is added to the list, new line for next item appears.
 In the addition there is a button to purchase all items, close shopping list and move all unchecked items to the new shopping list.
+
+__URL__ - https://home-manager.needleware.com/shopping-list
 
 ![Shopping list mockup](./documentation/mockups/img/ShoppingList.png)
