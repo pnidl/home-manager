@@ -204,7 +204,7 @@ All pages except the default page will dispaly a top menu. It will show:
 #### Navigation menu component
 All pages except the default page will dispaly a navigation menu. It will show list of links/buttons to navigate to all listings in the system.
 
-![Navidation menu mockup](./documentation/mockups/img/NavigationMenu.png)
+![Navigation menu mockup](./documentation/mockups/img/NavigationMenu.png)
 
 #### Common list component
 It is usefull to prepare a common component that will display system entities and their interesting properties in a table. Each row should dispaly information about a single entity and by clicking the row, it should display the detail component for the entity in a hover window.
@@ -214,19 +214,19 @@ The component will provide:
 * table of values - each entity name will open a detail window, each line will have a "Remove" column on the last position to remove the entity
 * Add button - on click it will display a Create hover window
 
-![Navidation menu mockup](./documentation/mockups/img/CommonList.png)
+![Common list mockup](./documentation/mockups/img/CommonList.png)
 
 #### Common detail component
 Same as common listing, it will be useful to provide a generic component for displaying details about entities in the system. The component should be shown as a hove window over the listing and should display all properties of selected component. In the addition it should show an "Edit" button that will switch the component to Common edit component and a "dismiss" button as a cross in top-right corner.
 
-![Navidation menu mockup](./documentation/mockups/img/CommonDetail.png)
+![Common detail mockup](./documentation/mockups/img/CommonDetail.png)
 
 #### Common edit/create component
 The same as Common detail component but all entity properties (including name but excluding ID) are displayed as editable text inputs. It provides two buttons:
 * __Save__ - will update the system entity to current state of the edit component
 * __Reset__ - will reset all local changes to the values saved in the system
 
-![Navidation menu mockup](./documentation/mockups/img/CommonEdit.png)
+![Common edit mockup](./documentation/mockups/img/CommonEdit.png)
 
 #### Household creation page
 Selecting the "Add new" option from Top menu's Household selection will open a Common create component for households.
@@ -234,13 +234,13 @@ Selecting the "Add new" option from Top menu's Household selection will open a C
 #### Items page
 Clicking the "Items" navigation button from Navigation menu will show Common listing component for items. This page should serve as an example for all other listing/edit/create pages in the system.
 
-![Navidation menu mockup](./documentation/mockups/img/ItemsPage-Listing.png)
-![Navidation menu mockup](./documentation/mockups/img/ItemsPage-Detail.png)
-![Navidation menu mockup](./documentation/mockups/img/ItemsPage-Edit_Create.png)
+![Item lsiting mockup](./documentation/mockups/img/ItemsPage-Listing.png)
+![Item detail mockup](./documentation/mockups/img/ItemsPage-Detail.png)
+![Item edit mockup](./documentation/mockups/img/ItemsPage-Edit_Create.png)
 
 #### Shopping list page
 Clicking the "Shopping List" navigation button from Navigation menu will show Shopping list page. This page will show the date and when the shopping list was open and list of entered items, their amounts, UoMs and a check box to mark the item as checked.
 Whenever an item is added to the list, new line for next item appears.
 In the addition there is a button to purchase all items, close shopping list and move all unchecked items to the new shopping list.
 
-![Navidation menu mockup](./documentation/mockups/img/ShoppingList.png)
+![Shopping list mockup](./documentation/mockups/img/ShoppingList.png)
