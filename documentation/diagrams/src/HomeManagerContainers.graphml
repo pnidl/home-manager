@@ -15,7 +15,6 @@
   <graph edgedefault="directed" id="G">
     <data key="d0"/>
     <node id="n0">
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="64.63800048828125" width="56.554100036621094" x="258.95846659342465" y="549.1809997558594"/>
@@ -36,7 +35,6 @@
       </data>
     </node>
     <node id="n1">
-      <data key="d5"/>
       <data key="d6">
         <y:SVGNode>
           <y:Geometry height="58.38100051879883" width="58.50005340576172" x="1089.379233296712" y="391.3094997406006"/>
@@ -58,7 +56,6 @@
     </node>
     <node id="n2" yfiles.foldertype="group">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:ProxyAutoBoundsNode>
           <y:Realizers active="0">
@@ -87,7 +84,6 @@
       </data>
       <graph edgedefault="directed" id="n2:">
         <node id="n2::n0">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="71.0" width="152.0" x="626.4458999633789" y="546.0"/>
@@ -110,7 +106,6 @@
           </data>
         </node>
         <node id="n2::n1">
-          <data key="d5"/>
           <data key="d6">
             <y:ShapeNode>
               <y:Geometry height="71.0" width="152.0" x="626.4458999633789" y="385.0"/>
@@ -118,7 +113,7 @@
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="63.0" x="44.5" y="18.5">&lt;html&gt;
 &lt;body style="text-align: center;"&gt;
-&lt;h4 style="margin: 0, padding: 0;"&gt;UI&lt;/h4&gt;
+&lt;h4 style="margin: 0, padding: 0;"&gt;Frontend&lt;/h4&gt;
 &lt;h5 style="margin: 0, padding: 0;"&gt;? - Angular2&lt;/h5&gt;
 &lt;/body&gt;
 &lt;/html&gt;<y:LabelModel>
@@ -133,7 +128,6 @@
           </data>
         </node>
         <node id="n2::n2">
-          <data key="d5"/>
           <data key="d6">
             <y:GenericNode configuration="com.yworks.flowchart.dataBase">
               <y:Geometry height="71.0" width="152.0" x="626.4458999633789" y="707.0"/>
@@ -157,7 +151,6 @@
       </graph>
     </node>
     <edge id="e0" source="n0" target="n2::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="-27.27419992675766" ty="-26.690399999999954"/>
@@ -181,7 +174,6 @@
       </data>
     </edge>
     <edge id="e1" source="n1" target="n2::n1">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -205,7 +197,6 @@
       </data>
     </edge>
     <edge id="n2::e0" source="n2::n1" target="n2::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -230,7 +221,6 @@ CRUD on assets&lt;/h4&gt;
       </data>
     </edge>
     <edge id="n2::e1" source="n2::n0" target="n2::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -254,7 +244,6 @@ CRUD on assets&lt;/h4&gt;
       </data>
     </edge>
     <edge id="e2" source="n0" target="n2::n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -279,7 +268,6 @@ Manages users and households&lt;/h4&gt;
       </data>
     </edge>
     <edge id="e3" source="n0" target="n2::n2">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
