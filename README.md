@@ -90,6 +90,9 @@ monolithic application. However decomposition in later stages should be prepared
 * __Single model codebase__ - In previous projects it was almost always necessary to create multiple levels of model
 classes - DBOs, DTOs and VOs, let's try something old - benefit from JPA entities and easy JSON serialization. It may
 also be beneficial for later testing of NoSQL databases.
+* __Automated testing__ - For each compacted unit of code (basically public methods) there should be a unit test,
+at least one integration test should be present to prove that the application is able start. UI and REST API testing
+is not part of scope of the prototype but should be added as soon as the prototype is functional.
 
 ## Context
 There really is not much to say about the context of the simple system as Home manager is in a prototype phase. 
