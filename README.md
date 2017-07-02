@@ -79,6 +79,17 @@ User stories are stored as [issues with label user-story](https://github.com/pni
 * __Extensibility__
 	* the prototype should provide a platform for future extensions like connectivity to some super market APIs, 
 	supplies prices, etc.
+	
+## Principles
+* __JEE7__ - As I am a Java developer and my next professional project will be JEE and JBoss based, I've chosen JEE7 as
+a main framework for backend development to get some experience with it.
+* __Angular2__ - It's hot, it's single-page approach, it uses TypeScript on top of that dumb JavaScript 
+* __Decomposition__ - For the prototype the application is decomposed to frontend and backend part only. Internal 
+decomposition is described in [Components chapter](#components) but in reality the whole backend is just a single
+monolithic application. However decomposition in later stages should be prepared as effortless as possible.
+* __Single model codebase__ - In previous projects it was almost always necessary to create multiple levels of model
+classes - DBOs, DTOs and VOs, let's try something old - benefit from JPA entities and easy JSON serialization. It may
+also be beneficial for later testing of NoSQL databases.
 
 ## Context
 There really is not much to say about the context of the simple system as Home manager is in a prototype phase. 
@@ -87,9 +98,10 @@ to monitor and manage the whole system. Users access the UI to manage and view t
 ![Context diagram](./documentation/diagrams/img/HomeManagerContext.png)
 
 ## Containers
-The prototype version of Home Manager uses pretty straightforward three tier architecture. All data are stored 
-in the PostgreSQL database, retrieved, processed and provided via REST API by JEE7 based Backend server and displayed 
-by Angular2 based single-page UI application.
+The prototype version of Home Manager uses pretty straightforward three tier architecture. All data are:
+* stored in the PostgreSQL database
+* retrieved, processed and provided via REST API by JEE7 based Backend server and
+* displayed by Angular2 based single-page UI application.
 ![Containers diagram](./documentation/diagrams/img/HomeManagerContainers.png)
 
 ## Components
@@ -98,118 +110,157 @@ High level components of the system are feature oriented. For the prototype, alm
 ![Containers diagram](./documentation/diagrams/img/HomeManagerComponents.png)
 
 ### Frontend
-UI part of the system shoudl be implemented as an [Angular2](http://www.angular2.com/) single-page app. It is composed
+UI part of the system should be implemented as an [Angular2](http://www.angular2.com/) single-page app. It is composed
 of multiple screens (components, pages, whatever) and communicates with the backend via REST API. Following diagram
-describes the detailed flow inside of the applciation:
+describes the detailed flow inside of the application:
 
 ![Web flow diagram](./documentation/diagrams/img/WebFlow.png)
 
 #### Default page
 Default page will be shown to unauthenticated users. It will allow users to login and/or register new account. 
-It will communicate with [User service](#user-service).
+It will communicate with [User service](#user-service) to provide following features:
+* User registration (#3)
+* User login (#4)
+* Password reset (#10)
 
-__URL__ - https://home-manager.needleware.com/
+__URL path__ - /
 
 ![Default page mockup](./documentation/mockups/img/DefaultPage.png)
 
 #### Top menu component
-All pages except the default page will dispaly a top menu. It will show:
+All pages except the default page will display a top menu. It will show:
 * Home manager logo
-* drop-down menu language selection
-* drop-down menu with user's email address and logout button
-* drop-down menu to select household, edit household and add new household
+* drop-down menu language selection - the default language to be set shoudl be retrieved from browser information (#11)
+if this information is missing all the language is not implemented English will be chosen. When the language is changed 
+by the user it is persisted to his account (#12) and the page should refresh with changed localization.
+* drop-down menu with:
+    * user's email address - it doesn't provide any action
+    * account settings button (#10) - clicking it will take user to [Account settings page](#account-settings-page) 
+    * logout button - clicking it will invalidate current authentication token and take user to 
+    [Default page](#default-page)
+* drop-down menu to:
+    * select household (#29) - clicking it will switch current user's context to the selected household and take 
+    user to [Inventory page](#inventory-page)
+    * edit household - clicking it will take user to [Household edit page](#household-edit-page) for selected household
+    * add new household (#29) - clicking it will take user to [Household edit page](#household-edit-page) for new 
+    household
 
 ![Top menu mockup](./documentation/mockups/img/TopMenu.png)
 
 #### Navigation menu component
-All pages except the default page will dispaly a navigation menu. It will show list of links/buttons to navigate 
-to all listings in the system.
+All pages except the [Default page](#default-page), [Household edit page](#household-edit-page) and 
+[Account settings page](#account-settings-page) will display a navigation menu. It will show list of links/buttons 
+to navigate to all available listings in the system:
+* [Inventory](#inventory-page)
+* [Shopping list](#shopping-list-page)
+* [Items page](#items-page)
+* Item categories
+* Storages
+* Storage types
+* [Shopping list history](#shopping-list-history-page)
+* UoMs
 
 ![Navigation menu mockup](./documentation/mockups/img/NavigationMenu.png)
 
 #### Common list component
-It is usefull to prepare a common component that will display system entities and their interesting properties 
-in a table. Each row should dispaly information about a single entity and by clicking the row, it should display 
+It is useful to prepare a common component that will display system entities and their interesting properties 
+in a table. Each row should display information about a single entity and by clicking the row, it should display 
 the detail component for the entity in a hover window.
 The component will provide:
-* table header - dynamically defined eccording to displayed entity. Filtering and sorting is not a part 
+* table header - dynamically defined according to displayed entity. Filtering and sorting is not a part 
 of the prototype, but the component should be extendable as this functionality will have a high priority 
-in future releases.
-* internal scrolling (only the table values are scrolled)
-* table of values - each entity name will open a detail window, each line will have a "Remove" column on the last 
-position to remove the entity
+in future releases
+* Table of values - each entity name will open a [Common detail component](#common-detail-component) for the entity,
+each line will have a "Remove" column on the last position to remove the entity
 * Add button - on click it will display a Create hover window
+* Internal scrolling (only the table values are scrolled), the header and add button should stay at the same position
 
-__URL__ - https://home-manager.needleware.com/<entity_name>
+__URL path__ - /<entity_name>
 
 ![Common list mockup](./documentation/mockups/img/CommonList.png)
 
 #### Common detail component
 Same as common listing, it will be useful to provide a generic component for displaying details about entities 
-in the system. The component should be shown as a hove window over the listing and should display all properties 
-of selected component. In the addition it should show an "Edit" button that will switch the component to 
-Common edit component and a "dismiss" button as a cross in top-right corner.
+in the system. The component should be shown as a hover window over the listing and should display all properties 
+of selected component.
 
-__URL__ - https://home-manager.needleware.com/<entity_name>/<entity_id>
+In the addition it should show an "Edit" button that will switch the component to  Common edit component and 
+a "Dismiss" button as a cross in top-right corner.
+
+__URL path__ - /<entity_name>/<entity_id>
 
 ![Common detail mockup](./documentation/mockups/img/CommonDetail.png)
 
-#### Common edit/create component
-The same as Common detail component but all entity properties (including name but excluding ID) are displayed 
-as editable text inputs. It provides two buttons:
+#### Common edit component
+The same as [Common detail component](#common-detail-component) but all entity properties (including name but excluding
+ID) are displayed as editable text inputs. It provides three buttons:
 * __Save__ - will update the system entity to current state of the edit component
 * __Reset__ - will reset all local changes to the values saved in the system
 * __Delete__ - will remove the entity from the system
 
 Create is the same component as edit but the entity ID is not filled yet.
 
-__URL__ - https://home-manager.needleware.com/<entity_name>/<entity_id>
+__URL path__ - /<entity_name>/<entity_id> (stays the same as detail, edit should not be available for bookmarking)
 
 ![Common edit mockup](./documentation/mockups/img/CommonEdit.png)
 
-#### Household creation/edit page
-Selecting the "Add new" option from Top menu's Household selection or clicking the icon next to a name of any 
-existing one will open a Common edit/create component for households. The only exception to other entity editors, 
-the household editor is not shown as hover window but fills the whole page.
+#### Household edit page
+Selecting the "Add new" option from [Top menu](#top-menu-cmponent)'s Household selection or clicking the icon next to
+a name of any existing one will open a [Common edit component](#common-edit-component) for households. The only 
+exception to other entity editors, the household editor is not shown as hover window but fills the whole page.
+
+User stories covered: (#5, #6)
 
 ![Household edit mockup](./documentation/mockups/img/Household-Edit.png)
 
 #### Account settings page
-Selecting the "Account settings" option from Top menu's user name drop-down box will open a Common edit/create component
-for user. Same as household edit, the user edit is not shown as hover window but fills the whole page.
+Selecting the "Account settings" option from [Top menu](#top-menu-cmponent)'s user name drop-down box will open 
+a [Common edit component](#common-edit-component) for user. Same as household edit, the user edit is not shown as
+hover window but fills the whole page.
+
+This page by default provides possibility to change password.
 
 ![Account settings mockup](./documentation/mockups/img/AccountSettings.png)
 
-#### Invetory page
-Clicking the "Inventory" navigation button from Navigation menu will show Common listing component for storage items.
+#### Inventory page
+Clicking the "Inventory" navigation button from [Navigation menu](#navigation-menu-component) will show 
+[Common list component](#common-list-component) for storage items.
 
-__URL__ - https://home-manager.needleware.com/inventory
+__URL path__ - /inventory
 
 ![Item lsiting mockup](./documentation/mockups/img/Inventory-Listing.png)
 ![Item detail mockup](./documentation/mockups/img/Inventory-Detail.png)
 ![Item edit mockup](./documentation/mockups/img/Inventory-Edit.png)
 
 #### Items page
-Clicking the "Items" navigation button from Navigation menu will show Common listing component for items. This page 
-should serve as an example for all other listing/edit/create pages in the system.
+Clicking the "Items" navigation button from [Navigation menu](#navigation-menu-component) will show 
+[Common list component](#common-list-component) for items. This page should serve as an example for all other 
+list/edit/create pages in the system (because I'm lazy to do the same mockup again and again).
 
-__URL__ - https://home-manager.needleware.com/items
+__URL path__ - /items
 
 ![Item lsiting mockup](./documentation/mockups/img/ItemsPage-Listing.png)
 ![Item detail mockup](./documentation/mockups/img/ItemsPage-Detail.png)
 ![Item edit mockup](./documentation/mockups/img/ItemsPage-Edit_Create.png)
 
 #### Shopping list page
-Clicking the "Shopping List" navigation button from Navigation menu will show Shopping list page. This page will show 
-the date and when the shopping list was open and list of entered items, their amounts, UoMs and a check box to mark 
-the item as checked.
+Clicking the "Shopping List" navigation button from [Navigation menu](#navigation-menu-component) will show 
+Shopping list page. This page will show  the date and when the shopping list was open and list of entered items, their
+amounts, UoMs and a check box to mark the item as checked.
 Whenever an item is added to the list, new line for next item appears.
 In the addition there is a button to purchase all items, close shopping list and move all unchecked items to the new 
 shopping list.
 
-__URL__ - https://home-manager.needleware.com/shopping-list
+__URL path__ - /shopping-list
 
 ![Shopping list mockup](./documentation/mockups/img/ShoppingList.png)
+
+#### Shopping list history page
+Shopping list history provides only listing of closed shopping lists and their details on row click, it has no
+possibility to add and edit.
+
+![Shopping list history listing mockup](./documentation/mockups/img/ShoppingListHistory-Listing.png)
+![Shopping list history detail mockup](./documentation/mockups/img/ShoppingListHistory-Detail.png)
 
 ### Backend
 
@@ -217,11 +268,16 @@ __URL__ - https://home-manager.needleware.com/shopping-list
 To provide real data separation for households, each household should have its own DB schema. In the addition the 
 "Master data" schema needs to be present to store data that need to be accessed globally - for the prototype 
 the Master data schema should contain just Users and Households. All other data are stored in household schemas.
+
+Data model should be defined on Java level as JPA entities, the DDL for prototype should be generated fully by
+JPA framework. TODO: find the best JEE world alternative for Spring Data JPA.
 ![Data model diagram](./documentation/diagrams/img/HomeManagerDataModel.png)
 
 #### Common CRUD service
 As the entities managed by the system are very similar in many aspects, a common service to provide basic CRUD 
-operations will help to speed up the development. An abstract Entity class should be created that contains following field:
+operations will help to speed up the development. Especially when there is
+[such common component](#common-list-component) present in frontend. An abstract Entity class should be created that 
+contains following field:
 * __id: String__ - ID of the entity, for future extensibility, use String UUIDs for all IDs in the system.
 
 The service should provide following methods:
@@ -235,8 +291,8 @@ and ordering
 * __delete entity by ID__ - this method will delete the entity identified by given ID
 
 #### User service
-Special implementation of Common CRUD service focused on master data entity User. Its main entity is User class, 
-descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) focused on master data entity User. Its main 
+entity is User class, descendant of Entity class with following additional fields:
 * __givenName: String__ - First name of the user
 * __surname: String__ - Last name of the user
 * __email: String__ - Email address of the user
@@ -244,16 +300,16 @@ descendant of Entity class with following additional fields:
 * __laguage: String__ - Preffered language of the user
 
 Additional methods:
-* __authenticate user__ - this method will check combination of email address and password to determine whether 
+* __authenticate user__ - (#4) this method will check combination of email address and password to determine whether 
 the user exists in the system and whether the password matches the stored value, it will return the User object 
 if successful, throw AuthenticationException otherwise.
-* __is user online__ - this method will check whether the given user is currently online
+* __is user online__ - (#9) this method will check whether the given user is currently online
 
 ![User service diagram](./documentation/diagrams/img/UserService.png)
 
 #### Household service
-Special implementation of Common CRUD service focused on master data entity Household. Its main entity is Household 
-class, descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) focused on master data entity Household. Its main
+entity is Household class, descendant of Entity class with following additional fields:
 * __name: String__ - name of the household - the name shouldn't be unique on the database level, to allow multiple 
 users to create households with same names as other users.
 * __schemaName: String__ - name of the database schema where the household data are stored
@@ -267,8 +323,8 @@ Additional methods:
 ![Household service diagram](./documentation/diagrams/img/HouseholdService.png)
 
 #### Item service
-Special implementation of Common CRUD service focused on household data entity Item. Its main entity is Item class, 
-descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) focused on household data entity Item. Its main
+entity is Item class, descendant of Entity class with following additional fields:
 * __name: String__ - Name of the item (TODO: think about a best way to localize entity names - create some set of 
 default items and fill it to each household? make item a master data entity?)
 * __description: String__ - Description of the item (TODO: think of localization the same way as for name)
@@ -281,8 +337,8 @@ Additional methods:
 ![Item service diagram](./documentation/diagrams/img/ItemService.png)
 
 #### Item category service
-Special implementation of Common CRUD service focused on household data entity ItemCategory. Its main entity is 
-ItemCategory class, descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) focused on household data entity ItemCategory.
+Its main entity is ItemCategory class, descendant of Entity class with following additional fields:
 * __name: String__ - Name of the item category (TODO: think about a best way to localize entity names - create some 
 set of default item categories and fill it to each household? make item category a master data entity?)
 * __description: String__ - Description of the item category (TODO: think of localization the same way as for name)
@@ -290,8 +346,8 @@ set of default item categories and fill it to each household? make item category
 ![Item category service diagram](./documentation/diagrams/img/ItemCategoryService.png)
 
 #### UoM Service
-Special implementation of Common CRUD service focused on household data entity UoM. Its main entity is UoM class, 
-descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) focused on household data entity UoM. Its main
+entity is UoM class, descendant of Entity class with following additional fields:
 * __name: String__ - Name of the unit (TODO: think about a best way to localize entity names - create some set 
 of default items and fill it to each household? make item a master data entity?)
 * __abbreviation: String__ - common abbreviation of the unit (TODO: think of localization the same way as for name)
@@ -305,8 +361,8 @@ the same base unit, otherwise an IllegalArgumentException is thrown
 ![UoM service diagram](./documentation/diagrams/img/UoMService.png)
 
 #### Storage service
-Special implementation of Common CRUD service focused on household data entity Storage. Its main entity is Storage 
-class, descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) focused on household data entity Storage.
+Its main entity is Storage class, descendant of Entity class with following additional fields:
 * __name: String__ - Name of the storage (TODO: think about a best way to localize entity names)
 * __description: String__ - Description of the item (TODO: think of localization the same way as for name)
 * __type: StorageType__ - Type of the storage
@@ -317,8 +373,8 @@ Additional methods:
 ![Storage service diagram](./documentation/diagrams/img/StorageService.png)
 
 #### Storage item service
-Special implementation of Common CRUD service focused on household data entity StorageItem. Its main entity is 
-StorageItem class, descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) focused on household data entity StorageItem.
+Its main entity is StorageItem class, descendant of Entity class with following additional fields:
 * __item: Item__ - reference to item stored
 * __uom: UoM__ - unit of measure used for measuring the stored amount
 * __amount: double__ - stored amount of item
@@ -332,8 +388,8 @@ Additional methods:
 ![Storage item service diagram](./documentation/diagrams/img/StorageItemService.png)
 
 #### Storage type service
-Special implementation of Common CRUD service focused on household data entity StorageType. Its main entity is 
-StorageType class, descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) focused on household data entity StorageType. 
+Its main entity is StorageType class, descendant of Entity class with following additional fields:
 * __name: String__ - Name of the storage type (TODO: think about a best way to localize entity names - create some set 
 of default storage types and fill it to each household? make storage a master data entity?)
 * __description: String__ - Description of the storage type (TODO: think of localization the same way as for name)
@@ -341,8 +397,8 @@ of default storage types and fill it to each household? make storage a master da
 ![Storage type service diagram](./documentation/diagrams/img/StorageTypeService.png)
 
 #### Shopping list service
-Special implementation of Common CRUD service focused on household data entity ShoppingList. Its main entity is 
-ShoppingList class, descendant of Entity class with following additional fields:
+Special implementation of [Common CRUD service](#common-crud-service) on household data entity ShoppingList. Its main
+entity is ShoppingList class, descendant of Entity class with following additional fields:
 * __created: Date__ - date when the shopping list was open
 * __closed: Date__ - date when the shopping list was closed (or null if still open)
 * __items: List<ShoppingItem>__ - list of ShoppingItems currently present in the shopping list
