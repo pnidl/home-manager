@@ -171,6 +171,7 @@ Special implementation of Common CRUD service focused on household data entity S
 
 Additional methods:
 * __get open shopping list__ - return currently open shopping list
+* __close shopping list__ - closes currently open shopping list and moves all its checked items to inventory without storage assigned
 
 #### Shopping item service
 Special implementation of Common CRUD service focused on household data entity ShoppingItem. Its main entity is ShoppingItem class, descendant of Entity class with following additional fields:
@@ -184,9 +185,15 @@ Additional methods:
 * __remove item from list__ - removes given amount of given item from the given shopping list
 
 ### Frontend
+UI part of the system shoudl be implemented as an [Angular2](http://www.angular2.com/) single-page app. It is composed
+of multiple screens (components, pages, whatever) and communicates with the backend via REST API. Following diagram
+describes the detailed flow inside of the applciation:
+
+![Web flow diagram](./documentation/diagrams/img/WebFlow.png)
 
 #### Default page
-Default page will be shown to unauthenticated users. It will allow users to login and/or register new account. It will communicate with [User service](#user-service).
+Default page will be shown to unauthenticated users. It will allow users to login and/or register new account. 
+It will communicate with [User service](#user-service).
 
 __URL__ - https://home-manager.needleware.com/
 
@@ -197,7 +204,7 @@ All pages except the default page will dispaly a top menu. It will show:
 * Home manager logo
 * drop-down menu language selection
 * drop-down menu with user's email address and logout button
-* drop-down menu to select current household and add new one
+* drop-down menu to select household, edit household and add new household
 
 ![Top menu mockup](./documentation/mockups/img/TopMenu.png)
 
@@ -221,7 +228,7 @@ __URL__ - https://home-manager.needleware.com/<entity_name>
 #### Common detail component
 Same as common listing, it will be useful to provide a generic component for displaying details about entities in the system. The component should be shown as a hove window over the listing and should display all properties of selected component. In the addition it should show an "Edit" button that will switch the component to Common edit component and a "dismiss" button as a cross in top-right corner.
 
-__URL__ - https://home-manager.needleware.com/<entity_name>/<entity_id>/detail
+__URL__ - https://home-manager.needleware.com/<entity_name>/<entity_id>
 
 ![Common detail mockup](./documentation/mockups/img/CommonDetail.png)
 
@@ -230,14 +237,33 @@ The same as Common detail component but all entity properties (including name bu
 * __Save__ - will update the system entity to current state of the edit component
 * __Reset__ - will reset all local changes to the values saved in the system
 
-__URL (edit)__ - https://home-manager.needleware.com/<entity_name>/<entity_id>/edit
+Create is the same component as edit but the entity ID is not filled yet.
 
-__URL (create)__ - https://home-manager.needleware.com/<entity_name>/create
+__URL__ - https://home-manager.needleware.com/<entity_name>/<entity_id>
 
 ![Common edit mockup](./documentation/mockups/img/CommonEdit.png)
 
-#### Household creation page
-Selecting the "Add new" option from Top menu's Household selection will open a Common create component for households.
+#### Household creation/edit page
+Selecting the "Add new" option from Top menu's Household selection or clicking the icon next to a name of any existing one
+will open a Common edit/create component for households. The only exception to other entity editors, the household
+editor is not shown as hover window but fills the whole page.
+
+![Household edit mockup](./documentation/mockups/img/Household-Edit.png)
+
+#### Account settings page
+Selecting the "Account settings" option from Top menu's user name drop-down box will open a Common edit/create component
+for user. Same as household edit, the user edit is not shown as hover window but fills the whole page.
+
+![Account settings mockup](./documentation/mockups/img/AccountSettings.png)
+
+#### Invetory page
+Clicking the "Inventory" navigation button from Navigation menu will show Common listing component for storage items.
+
+__URL__ - https://home-manager.needleware.com/inventory
+
+![Item lsiting mockup](./documentation/mockups/img/Inventory-Listing.png)
+![Item detail mockup](./documentation/mockups/img/Inventory-Detail.png)
+![Item edit mockup](./documentation/mockups/img/Inventory-Edit.png)
 
 #### Items page
 Clicking the "Items" navigation button from Navigation menu will show Common listing component for items. This page should serve as an example for all other listing/edit/create pages in the system.
