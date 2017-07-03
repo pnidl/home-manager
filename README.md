@@ -411,6 +411,7 @@ Part of the ShoppingList class is ShoppingItem class, descendant of Entity class
 * __uom: UoM__ - unit of measure used for measuring the wanted amount
 * __amount: double__ - wanted amount of item
 * __shoppingList: ShoppingList__ - the shopping list where the item is mentioned
++ __checked: boolean__ - tag stating that the item should be add to storage after the shopping list is closed
 
 Additional methods:
 * __get open shopping list__ - return currently open shopping list
