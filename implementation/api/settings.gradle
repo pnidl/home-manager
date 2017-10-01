@@ -1,0 +1,6 @@
+rootProject.name = 'api'
+
+boolean inComposite = gradle.parent != null
+if (!inComposite) {
+    includeBuild '../model'
+}
