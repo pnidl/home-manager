@@ -2,6 +2,8 @@ package com.needleware.home_manager.model;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.util.Objects;
+
 /**
  * Abstract entity class to be parent of all internal entities as all of them have an {@link #id} field.
  *
@@ -46,15 +48,13 @@ public abstract class AEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AEntity aEntity = (AEntity) o;
-
-        return id != null ? id.equals(aEntity.id) : aEntity.id == null;
+        return Objects.equals(id, aEntity.id);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return Objects.hash(id);
     }
 
     @Override

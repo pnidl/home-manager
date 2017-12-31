@@ -89,10 +89,10 @@
               <y:Geometry height="71.0" width="152.0" x="626.4458999633789" y="546.0"/>
               <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
               <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="132.0" x="10.0" y="18.5">&lt;html&gt;
+              <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="34.0" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="113.0" x="19.5" y="18.5">&lt;html&gt;
 &lt;body style="text-align: center;"&gt;
 &lt;h4 style="margin: 0, padding: 0;"&gt;Backend&lt;/h4&gt;
-&lt;h5 style="margin: 0, padding: 0;"&gt;Java 8 - WildFly 10 - JEE7&lt;/h5&gt;
+&lt;h5 style="margin: 0, padding: 0;"&gt;Java 8 - spring - Karaf&lt;/h5&gt;
 &lt;/body&gt;
 &lt;/html&gt;<y:LabelModel>
                   <y:SmartNodeLabelModel distance="4.0"/>

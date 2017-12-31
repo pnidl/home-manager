@@ -1,9 +1,8 @@
 package com.needleware.home_manager.services;
 
 import com.needleware.home_manager.api.IItemService;
-import com.needleware.home_manager.model.AEntity;
-import com.needleware.home_manager.model.Item;
-import com.needleware.home_manager.model.ItemCategory;
+import com.needleware.home_manager.model.inventory.Category;
+import com.needleware.home_manager.model.inventory.Item;
 
 import java.util.*;
 
@@ -23,10 +22,10 @@ public class ItemService extends AInMemoryCommonCRUDService<Item> implements IIt
     // region ICommonCRUDService
 
     @Override
-    public String create(Item entity) {
-        String id = super.create(entity);
+    public String create(Item item) {
+        String id = super.create(item);
         String categoryID = null;
-        ItemCategory category = entity.getCategory();
+        Category category = item.getCategory();
         if (category != null) {
             categoryID = category.getId();
         }

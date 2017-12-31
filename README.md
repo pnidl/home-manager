@@ -16,15 +16,10 @@ of managing other users, this functionality should be handled by admin role only
 * __Household__ - a group of users that share the common assets in the system. Each user can be part of multiple 
 households, each household can have multiple users. In the first prototype version, each user can fully manage 
 the households he is assigned to. Household can be created by any user.
-* __Item__ - generic item in the system. The items have name, expiration date, base UoM and category.
-* __Unit of Measure (UoM)__ - generic unit of measure to describe the amount of each item either stored or to be purchased.
-* __Item category__ - items can be grouped into categories, each item can have at most one category.
-* __Storage__ - when items exist in the system, it is usefull to know where they are
-* __Storage type__ - typical examples can be a fridge, pantry, bathroom rack, etc. For the purpose of extensibility 
-it is worth to allow multiple storages of the same type as each storage can provide different environmental conditions. 
-Also it can happen that single household has multiple fridges, that's why it's usefull to provide a possibility 
-to create for example "Fridge in the kitchen" and "Fridge in the garage". Also in future versions it may be nice 
-to provide a possibility to place an item automatically to it's pre-defined storage type.
+* __Item__ - generic item in the system. The items have name, expiration date, base unit of measure and category.
+* __Category__ - items can be grouped into categories, each item can have at most one category.
+* __Storage__ - when items exist in the system, it is useful to know where they are and in future what conditions this
+storage provides that can have impact on item's durability - like difference in temperature between fridge and a pantry. 
 * __Shopping list__ - when going shopping it is useful (if not even necessary) to prepare a list of items 
 to be purchased. It is worth to keep a history of shopping lists but only in an archived form.
 
@@ -81,8 +76,10 @@ User stories are stored as [issues with label user-story](https://github.com/pni
 	supplies prices, etc.
 	
 ## Principles
-* __JEE7__ - As I am a Java developer and my next professional project will be JEE and JBoss based, I've chosen JEE7 as
-a main framework for backend development to get some experience with it.
+* __Spring__ - As there is currently no better IoC framework available and I'm really proficient with Spring already.
+* __OSGi__ - It's not really necessary for this application but this project should serve also as a playground for
+prototyping and testing interesting technologies. In this context, I would like to try microservice oriented and
+event driven architecture based on OSGi.
 * __Angular2__ - It's hot, it's single-page approach, it uses TypeScript on top of that dumb JavaScript 
 * __Decomposition__ - For the prototype the application is decomposed to frontend and backend part only. Internal 
 decomposition is described in [Components chapter](#components) but in reality the whole backend is just a single
@@ -101,13 +98,16 @@ to monitor and manage the whole system. Users access the UI to manage and view t
 ![Context diagram](./documentation/diagrams/img/HomeManagerContext.png)
 
 ## Containers
+__TODO__: add event sourcing technologies - Kafka + MongoDB
 The prototype version of Home Manager uses pretty straightforward three tier architecture. All data are:
 * stored in the PostgreSQL database
-* retrieved, processed and provided via REST API by JEE7 based Backend server and
+* retrieved, processed and provided via REST API by Karaf based Backend server and
 * displayed by Angular2 based single-page UI application.
+
 ![Containers diagram](./documentation/diagrams/img/HomeManagerContainers.png)
 
 ## Components
+__TODO__: rework for NoSQL and event based approach (get rid of the ugly diagram)
 High level components of the system are feature oriented. For the prototype, almost all features are entity based. 
 
 ![Containers diagram](./documentation/diagrams/img/HomeManagerComponents.png)
@@ -268,6 +268,7 @@ possibility to add and edit.
 ### Backend
 
 #### Database
+__TODO__: rework data model according to current implementation
 To provide real data separation for households, each household should have its own DB schema. In the addition the 
 "Master data" schema needs to be present to store data that need to be accessed globally - for the prototype 
 the Master data schema should contain just Users and Households. All other data are stored in household schemas.
@@ -331,7 +332,7 @@ entity is Item class, descendant of Entity class with following additional field
 * __name: String__ - Name of the item (TODO: think about a best way to localize entity names - create some set of 
 default items and fill it to each household? make item a master data entity?)
 * __description: String__ - Description of the item (TODO: think of localization the same way as for name)
-* __category: ItemCategory__ - Category that the item is assigned to
+* __category: Category__ - Category that the item is assigned to
 * __baseUoM: UoM__ - base unit of measure for the item
 
 Additional methods:

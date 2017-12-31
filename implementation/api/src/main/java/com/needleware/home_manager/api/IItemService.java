@@ -1,7 +1,6 @@
 package com.needleware.home_manager.api;
 
-import com.needleware.home_manager.model.Item;
-import com.needleware.home_manager.model.ItemCategory;
+import com.needleware.home_manager.model.inventory.Item;
 
 import java.util.List;
 
@@ -12,6 +11,6 @@ import java.util.List;
  */
 public interface IItemService extends ICommonCRUDService<Item> {
 
-    List<Item> getByCategoryID(String itemCategoryID);
+    List<Item> getByCategoryID(String categoryID);
 
 }

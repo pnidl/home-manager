@@ -1,14 +1,13 @@
 package com.needleware.home_manager.services;
 
-import com.needleware.home_manager.api.IItemCategoryService;
+import com.needleware.home_manager.api.ICategoryService;
 import com.needleware.home_manager.api.IItemService;
-import com.needleware.home_manager.model.Item;
-import com.needleware.home_manager.model.ItemCategory;
+import com.needleware.home_manager.model.inventory.Category;
+import com.needleware.home_manager.model.inventory.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * TODO: class description
@@ -21,28 +20,28 @@ public class Main {
     private static final int ITEM_COUNT = 30;
     private static final int ITEM_CATEGORY_COUNT = 5;
 
-    private static IItemCategoryService itemCategoryService = new ItemCategoryService();
+    private static ICategoryService categoryService = new CategoryService();
     private static IItemService itemService = new ItemService();
 
     public static void main(String[] args) {
         for (int i = 0; i < ITEM_CATEGORY_COUNT; i++) {
-            ItemCategory itemCategory = new ItemCategory();
+            Category itemCategory = new Category();
             itemCategory.setName("ItemCategory-" + i);
-            itemCategoryService.create(itemCategory);
+            categoryService.create(itemCategory);
         }
 
-        List<ItemCategory> itemCategories = itemCategoryService.list();
+        List<Category> categories = categoryService.list();
 
         for (int i = 0; i < ITEM_COUNT; i++) {
             Item item = new Item();
             item.setName("Item-" + i);
-            item.setCategory(itemCategories.get(i % itemCategories.size()));
+            item.setCategory(categories.get(i % categories.size()));
             itemService.create(item);
         }
 
-        for (ItemCategory itemCategory : itemCategories) {
-            LOGGER.info("Category {} contains items:", itemCategory);
-            for (Item item : itemService.getByCategoryID(itemCategory.getId())) {
+        for (Category category : categories) {
+            LOGGER.info("Category {} contains items:", category);
+            for (Item item : itemService.getByCategoryID(category.getId())) {
                 LOGGER.info("{}", item);
             }
         }
